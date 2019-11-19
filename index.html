@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Learn to Code</title>
+    <link href="prism.css" rel="stylesheet" />
+    <link href="styles.css" rel="stylesheet" />
+</head>
+<body class="language-ruby">
+    <!-- need to get rid of wacky pre formatting
+    https://stackoverflow.com/questions/17257200/removing-leading-whitespace-from-indented-html-source-in-pre-code-tags
+    https://stackoverflow.com/questions/31753617/how-can-i-remove-leading-whitespace-in-my-pre-code-block-without-removing-in?noredirect=1&lq=1 -->
+
+    <h1>Learn to Code</h1>
+    <nav>
+        <a href="#">App Academy Notes</a>
+    </nav>
+    <hr>
+
+
+    <h2>App Academy Notes</h2>
+    <hr>
+
+
+    <h3>Full Stack In Person</h3>
+    <h4>Foundations</h4>
+    <h5>Procs</h5>
+    <ul>
+        <li>blocks can't be saved to variables</li>
+        <li>to save a block to a variable you must turn it into a proc</li>
+        <li>a proc is an object that contains a block</li>
+    </ul>
+    <h6>Creating a Proc</h6>
+    <pre><code>proc = Proc.new { |parameter(s)| block }</code></pre>
+
+    <h6>Calling a Proc</h6>
+    <pre><code>proc.call(arg)</code></pre>
+
+    <h6>Passing a Proc into a Method</h6>
+    <span>Method 1:</span>
+    <pre><code>def method(prc)
+    prc.call(arg)
+end
+
+var = Proc.new {|p| block }
+method(var)</code></pre>
+
+    <span>Method 2:</span>
+    <pre><code>def method(&prc)
+    prc.call(arg)
+end
+
+method { |p| block }</code></pre>
+
+    <span>Method 3:</span>
+    <pre><code>def method(&prc)
+    prc.call(arg)
+end
+
+method { |p| block }</code></pre>
+
+    <ul><li>the "&" character will convert a proc to a block or vice versa depending on
+            context</li></ul>
+
+
+
+    <h5>Classes</h5>
+    <pre><code>class Name
+    def initialize(var_1, var_2, var_3)
+        @var_1 , @var_2, @var_3 = var_1, var_2, var_3
+    end
+end</code></pre>
+    <ul>
+        <li>class names must begin with a capital letter</li>
+        <li><code>@</code> character denotes an instance variable/attribute</li>
+        <li><code>initialize</code> method is run on instance creation:</li>
+        <ul><li><code>name_1 = Name.new(“str”, true, 3)</code></li></ul>
+    </ul>
+
+    <h6>Creating an Instance of a Class</h6>
+    <pre><code>name_1 = Name.new(“str”, true, 3)</code></pre>
+    <ul><li>printing out an instance will return its class, id, and attributes</li></ul><!--add example-->
+
+    <h6>Getter Methods</h6>
+    <ul><li>Note: the following getter is better implemented using attr_reader</li></ul><!--add link-->
+    <pre><code>class Name
+    def initialize(var_1, var_2, var_3)
+        @var_1 , @var_2, @var_3 = var_1, var_2, var_3
+    end
+
+    #getter
+    def var_1
+        @var_1
+    end
+end
+
+name_1 = Name.new(“str”, true, 3)
+name_1.var_1 #"str"</code></pre>
+    <ul>
+        <li>getter methods allow you to access instance attributes</li>
+        <li>getter methods can't modify attributes</li><!--repetetive-->
+    </ul>
+
+    <h6>Setter Methods</h6>
+    <ul><li>Note: the following setter is better implemented using attr_writer</li></ul>
+    <pre><code>class Name
+    def initialize(var_1, var_2, var_3)
+        @var_1 , @var_2, @var_3 = var_1, var_2, var_3
+    end
+
+    #setter
+    def var_1=(str)
+        @var_1 = str
+    end
+end
+    
+name_1 = Name.new(“string”, true, 3)
+name_1.var_1 = "new_string"</code></pre>
+
+    <ul>
+        <li><code>name_1.var_1 = "new_string"</code> is functionally equivalent to: <code>name_1.var_1=("new_string")</code></li>
+        <ul><li>in this case no parenthesis is best practice</li></ul>
+    </ul>
+    
+
+
+    <h5>Instance vs Class Variables</h5>
+    <h6>Instance Variables</h6>
+    <pre><code>class Bike
+    def initialize(num_wheels)
+        @num_wheels = num_wheels
+        @color = "red"
+    end
+end</code></pre>
+    <ul>
+        <li>denoted with <code>@</code> character</li>
+        <li>usually assigned within the <code>initialize</code> method</li>
+        <li>are distinct to each instance of a class</li>
+    </ul>
+
+    <h6>Class Variables</h6>
+    <pre><code>class Bike
+    @@num_wheels = 2
+end</code></pre>
+    <ul>
+        <li>denoted with <code>@@</code></li>
+        <li>usually assigned outside the <code>initialize</code> method, but
+            inside the class</li>
+        <li>are the same accross all instances of a class</li>
+        <ul><li>changing a class variable affects all current and future instances</li></ul>
+    </ul>
+
+    <h6>Class Constants</h6>
+    <pre><code>class Bike
+    NUM_WHEELS = 2
+end</code></pre>
+    <ul>
+        <li>class constants are capitalized</li>
+        <li>shared across all instances like class variables, except can’t be 
+            reassigned</li>
+        <!--more notes?-->
+    </ul>
+
+    <h5>Instance Methods vs Class Methods</h5>
+    <h6>Instance Methods</h6>
+    <pre><code>class Cat
+    def initialize(name, meow)
+        @name, @meow = name, meow
+    end
+
+    def speak
+        @name + " says " + @meow
+    end
+end
+    
+my_cat = Cat.new("Edward", "meow")
+my_cat.speak #"Edward says meow"</code></pre>
+    <ul>
+        <li>called on instance</li>
+        <li>can use instance variables</li>
+        <li>uses <code>Cat#speak</code> notation when talked about</li>
+    </ul>
+    
+    <h6>Class Methods</h6>
+    <pre><code>class Cat
+    def initialize(name, meow)
+        @name, @meow = name, meow
+    end
+    
+    def self.meow
+        "meeeeooow"
+    end
+end
+
+Cat.meow #"meeeeooow"</code></pre>
+
+    <ul>
+        <li>defined with <code>self.</code> in front of method name</li>
+        <li>called on class itself</li>
+        <li>use <code>Cat::meow</code> notation when talked about</li>
+    </ul>
+
+
+
+    <h5>Monkey Patching</h5>
+    <span>Definition: extends the functionality of a class, usually by adding a 
+        custom method</span>
+    <pre><code>class String
+    def downcase?
+        self == self.downcase
+    end
+end
+"Hello".downcase? #false</code></pre>
+    <ul><li>by defining methods inside the String class, those methods are added
+        to that class</li>
+    </ul>
+
+    <h5>Requiring Files</h5>
+    <h6>require_relative</h6>
+    <ul><li>seperating files allows for organization and seperation of concerns</li></ul>
+    <pre><code>require_relative "relative path"</code></pre>
+    <ul></ul>
+    
+    <h6>require</h6>
+    <pre><code>require "file name"</code></pre>
+    <ul>
+        <li>normal <code>require</code> can be used with RSPEC <code>/spec</code>
+             files; it already knows to look in <code>/lib</code></li>
+        <ul><li>RSPEC configures <code>$LOADPATH</code> automatically</li></ul>
+        <li>generally used with gems:</li>
+        <ul><li><code>require "gem name"</code></li></ul>
+    </ul>
+
+
+    <h5>User Input</h5>
+    <h6>String#gets</h6>
+    <pre><code>p "Enter your name"
+name = gets
+p "hello " + name</code></pre>
+    <ul>
+        <li><code>gets</code> halts the execution of the code and returns the 
+        user's keystrokes once they've hit enter</li>
+        <li>since the user also hits enter, it will also return the newline
+            (enter) character, <code>\n</code>, at the end of the string</li>
+        <ul><li><code>String#chomp</code> fixes this</li></ul>
+    </ul>
+    
+    <h6>String#chomp</h6>
+    <pre><code>"Yes\n".chomp #"Yes"</code></pre>
+    <ul>
+        <li>removes any <code>\n</code> chars at the end of the string by 
+            returning a new string</li>
+        <li>often gets used in conjunction with <code>gets</code>:</li>
+        <ul><li><code>gets.chomp</code></li></ul>
+        <li><code>gets</code> always returns a string, use 
+            <code>String#to_i</code> to convert input to integer</li>
+    </ul>
+
+
+
+    <h5>Abstraction and Encapsulation</h5>
+    <ul>
+        <li>OOP is a design pattern that that is based on using objects that 
+            interact with each other</li>
+        <li>abstraction and encapsulation aid in structuring OOP programs</li>
+    </ul>
+    <h6>Abstraction</h6>
+    <ul>
+        <li>Reduce complexity of programs by only exposing necessary high level 
+            details</li>
+        <ul><li>Ex: using methods to allow reuse of code, or to hide 
+            implementation details</li></ul>
+    </ul>
+    <h6>Encapsulation</h6>
+    <ul>
+        <li>increase security of your code by only allowing users to access data 
+            that is safe for them to use</li>
+        <ul><li>purposely not implementing getter/setter methods in your classes 
+            to hide vars from users</li></ul>
+    </ul>
+
+
+
+    <h5>Attr Methods</h5>
+    <h6>attr_reader</h6>
+    <h6>attr_writer</h6>
+    <h6>attr_accessor</h6>
+
+
+
+    <h5>Syntactic Sugar</h5>
+
+    <h5>Recursion</h5>
+
+    <h5>Spaceship Operator</h5>
+
+    <h5>Nil as Falsey</h5>
+
+    <script src="app.js"></script>
+    <script src="prism.js"></script>
+</body>
+</html>
